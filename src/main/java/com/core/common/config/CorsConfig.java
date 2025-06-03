@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://localhost:3000") // 리액트나 Vue.js 쓸 때는 포트번호가 3000번이기 떄문에 위 코드로 사용
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
