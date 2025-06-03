@@ -1,0 +1,114 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title th:text="${module.name}">Module Learning</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        .progress-bar {-->
+<!--            transition: width 0.3s ease-in-out;-->
+<!--        }-->
+<!--        .step-item {-->
+<!--            transition: all 0.3s ease;-->
+<!--        }-->
+<!--        .step-item.completed {-->
+<!--            background-color: #f0fdf4;-->
+<!--            border-color: #86efac;-->
+<!--        }-->
+<!--        .step-item.completed .step-title {-->
+<!--            color: #16a34a;-->
+<!--        }-->
+<!--        .step-item.completed .complete-btn {-->
+<!--            background-color: #16a34a;-->
+<!--            color: white;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-gray-50">-->
+<!--    <div class="container mx-auto px-4 py-8">-->
+<!--        &lt;!&ndash; 헤더 &ndash;&gt;-->
+<!--        <div class="mb-8">-->
+<!--            <div class="flex justify-between items-center">-->
+<!--                <h1 class="text-3xl font-bold text-gray-800" th:text="${module.name}">Module Name</h1>-->
+<!--                <a href="/" class="text-pink-600 hover:text-pink-700">← 메인으로 돌아가기</a>-->
+<!--            </div>-->
+<!--            <p class="mt-2 text-gray-600" th:text="${module.description}">Module Description</p>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 진행 상태 &ndash;&gt;-->
+<!--        <div class="mb-8">-->
+<!--            <div class="flex justify-between items-center mb-2">-->
+<!--                <span class="text-sm font-medium text-gray-700">학습 진행률</span>-->
+<!--                <span class="text-sm font-medium text-gray-700" th:text="${module.getProgress() + '%'}">0%</span>-->
+<!--            </div>-->
+<!--            <div class="w-full bg-gray-200 rounded-full h-2.5">-->
+<!--                <div class="bg-pink-600 h-2.5 rounded-full progress-bar" -->
+<!--                     th:style="'width: ' + ${module.getProgress()} + '%'"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">-->
+<!--            &lt;!&ndash; 학습 단계 &ndash;&gt;-->
+<!--            <div class="md:col-span-2">-->
+<!--                <h2 class="text-xl font-semibold mb-4">학습 단계</h2>-->
+<!--                <div class="space-y-4">-->
+<!--                    <div th:each="step : ${module.steps}" -->
+<!--                         th:class="'step-item p-4 border rounded-lg ' + (${step.completed} ? 'completed' : '')"-->
+<!--                         th:data-step-id="${step.id}">-->
+<!--                        <h3 class="step-title text-lg font-medium mb-2" th:text="${step.title}">Step Title</h3>-->
+<!--                        <p class="text-gray-600 mb-4" th:text="${step.description}">Step Description</p>-->
+<!--                        <button th:if="${!step.completed}"-->
+<!--                                class="complete-btn px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-colors"-->
+<!--                                th:onclick="'completeStep(\'' + ${step.id} + '\')'">-->
+<!--                            완료-->
+<!--                        </button>-->
+<!--                        <span th:if="${step.completed}" -->
+<!--                              class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded">-->
+<!--                            ✓ 완료됨-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; 학습 목표 &ndash;&gt;-->
+<!--            <div class="md:col-span-1">-->
+<!--                <div class="bg-white p-6 rounded-lg shadow-sm border">-->
+<!--                    <h2 class="text-xl font-semibold mb-4">학습 목표</h2>-->
+<!--                    <ul class="space-y-3">-->
+<!--                        <li th:each="goal : ${module.goals}" -->
+<!--                            class="flex items-start">-->
+<!--                            <span class="text-pink-600 mr-2">•</span>-->
+<!--                            <span th:text="${goal}">Learning Goal</span>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        function completeStep(stepId) {-->
+<!--            fetch(`/modules/${window.location.pathname.split('/').pop()}/steps/${stepId}/complete`, {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                }-->
+<!--            })-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                if (data.success) {-->
+<!--                    const stepElement = document.querySelector(`[data-step-id="${stepId}"]`);-->
+<!--                    stepElement.classList.add('completed');-->
+<!--                    -->
+<!--                    // 진행률 업데이트-->
+<!--                    const progressBar = document.querySelector('.progress-bar');-->
+<!--                    progressBar.style.width = `${data.progress}%`;-->
+<!--                    document.querySelector('.text-gray-700:last-child').textContent = `${data.progress}%`;-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => console.error('Error:', error));-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
