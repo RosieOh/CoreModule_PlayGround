@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>모듈 목록 - Core Module Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .module-card {
+            transition: transform 0.2s;
+            height: 100%;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .module-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Core Module Guide</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/modules">모든 모듈</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">모듈 목록</h1>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <div class="col" th:each="module : ${modules}">
+                <div class="card module-card">
+                    <div class="card-body text-center">
+                        <div class="module-icon">
+                            <i th:class="${module == 'security' ? 'fas fa-shield-alt' : 
+                                         module == 'validation' ? 'fas fa-check-circle' :
+                                         module == 'logging' ? 'fas fa-clipboard-list' :
+                                         module == 'cache' ? 'fas fa-database' :
+                                         module == 'audit' ? 'fas fa-history' :
+                                         module == 'message' ? 'fas fa-comments' :
+                                         module == 'file' ? 'fas fa-file' :
+                                         'fas fa-clock'}"></i>
+                        </div>
+                        <h5 class="card-title" th:text="${module.substring(0,1).toUpperCase() + module.substring(1)}">모듈명</h5>
+                        <p class="card-text" th:switch="${module}">
+                            <span th:case="'security'">보안 관련 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'validation'">입력값 검증 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'logging'">로깅 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'cache'">캐시 관리 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'audit'">감사 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'message'">메시지 관리 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'file'">파일 처리 기능을 제공하는 모듈입니다.</span>
+                            <span th:case="'scheduler'">스케줄링 기능을 제공하는 모듈입니다.</span>
+                        </p>
+                        <a th:href="@{/modules/{name}(name=${module})}" class="btn btn-primary">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+</body>
+</html> 
