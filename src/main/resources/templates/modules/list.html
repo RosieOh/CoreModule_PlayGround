@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Modules - Learning Guide</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/module-guide.css">
+    <style>
+        body {
+            background-color: #e8f0fe !important;
+            min-height: 100vh;
+        }
+        [data-theme="dark"] body {
+            background-color: #202124 !important;
+        }
+        .module-card {
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            margin-bottom: 5px;
+        }
+        .feature-list li:before {
+            content: "•";
+            color: #007bff;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cube mr-2"></i>Core Modules
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/modules">Modules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/docs">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/examples">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">Community</a>
+                    </li>
+                </ul>
+                <div class="navbar-tools" style="display: flex;">
+                    <button class="btn btn-outline-primary" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="fontSizeToggle" aria-label="Toggle font size">
+                        <i class="fas fa-text-height"></i>
+                        <span>Font Size</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="highContrastToggle" aria-label="Toggle high contrast">
+                        <i class="fas fa-adjust"></i>
+                        <span>High Contrast</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="guide-header">
+        <div class="container">
+            <h1>Core Modules Learning Guide</h1>
+            <p class="lead">Explore our comprehensive collection of core modules and learn how to implement them in your projects.</p>
+        </div>
+    </header>
+
+    <main id="main-content" class="container">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="search-box">
+                    <label for="moduleSearch" class="sr-only">Search modules</label>
+                    <input type="text" class="form-control" id="moduleSearch" placeholder="Search modules..." aria-label="Search modules">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="filter-box">
+                    <label for="moduleFilter" class="sr-only">Filter modules</label>
+                    <select class="form-control" id="moduleFilter" aria-label="Filter modules">
+                        <option value="all">All Modules</option>
+                        <option value="security">Security</option>
+                        <option value="data">Data Management</option>
+                        <option value="integration">Integration</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="moduleList">
+            <div th:each="module : ${modules}" class="col-md-6 col-lg-4 mb-4">
+                <div class="module-card">
+                    <div class="card-body">
+                        <div class="module-icon mb-3" aria-hidden="true">
+                            <i class="fas" th:classappend="${module.key == 'security' ? 'fa-shield-alt' : 
+                                                          module.key == 'validation' ? 'fa-check-circle' :
+                                                          module.key == 'logging' ? 'fa-clipboard-list' :
+                                                          module.key == 'cache' ? 'fa-database' :
+                                                          module.key == 'audit' ? 'fa-history' :
+                                                          module.key == 'message' ? 'fa-comments' :
+                                                          module.key == 'file' ? 'fa-file-alt' :
+                                                          'fa-tasks'}"></i>
+                        </div>
+                        <h5 class="card-title" th:text="${module.value.name}">Module Name</h5>
+                        <p class="card-text text-muted mb-3" th:text="${module.value.features[0]}">Brief description</p>
+                        <ul class="feature-list mb-4">
+                            <li th:each="feature : ${module.value.features}" th:text="${feature}">Feature</li>
+                        </ul>
+                        <a th:href="@{/modules/{name}(name=${module.key})}" class="btn btn-primary btn-block">
+                            Learn More <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Core Modules</h5>
+                    <p class="text-muted">A comprehensive guide to implementing core functionality in your applications.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <p class="text-muted">© 2024 Core Modules. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon and text
+            const icon = themeToggle.querySelector('i');
+            const text = themeToggle.querySelector('span');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            text.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+            // Update body class
+            document.body.classList.toggle('dark-theme', newTheme === 'dark');
+        }
+
+        // Initialize theme
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+                const icon = themeToggle.querySelector('i');
+                const text = themeToggle.querySelector('span');
+                icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                text.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            } else if (prefersDarkScheme.matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.body.classList.add('dark-theme');
+                const icon = themeToggle.querySelector('i');
+                const text = themeToggle.querySelector('span');
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Light Mode';
+            }
+        }
+
+        // Call initialize theme when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Font size toggle functionality
+        const fontSizeToggle = document.getElementById('fontSizeToggle');
+        let currentFontSize = 1;
+
+        fontSizeToggle.addEventListener('click', () => {
+            currentFontSize = currentFontSize === 1 ? 1.2 : 1;
+            document.body.style.fontSize = `${currentFontSize}rem`;
+            localStorage.setItem('fontSize', currentFontSize);
+        });
+
+        // Initialize font size
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            currentFontSize = parseFloat(savedFontSize);
+            document.body.style.fontSize = `${currentFontSize}rem`;
+        }
+
+        // High contrast toggle functionality
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        let isHighContrast = false;
+
+        highContrastToggle.addEventListener('click', () => {
+            isHighContrast = !isHighContrast;
+            document.documentElement.setAttribute('data-contrast', isHighContrast ? 'high' : 'normal');
+            localStorage.setItem('highContrast', isHighContrast);
+        });
+
+        // Initialize high contrast
+        const savedHighContrast = localStorage.getItem('highContrast');
+        if (savedHighContrast) {
+            isHighContrast = savedHighContrast === 'true';
+            document.documentElement.setAttribute('data-contrast', isHighContrast ? 'high' : 'normal');
+        }
+
+        // Search functionality
+        $('#moduleSearch').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('.module-card').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        // Filter functionality
+        $('#moduleFilter').on('change', function() {
+            var value = $(this).val().toLowerCase();
+            if (value === 'all') {
+                $('.module-card').show();
+            } else {
+                $('.module-card').hide();
+                $('.module-card').filter(function() {
+                    return $(this).find('.card-title').text().toLowerCase().includes(value);
+                }).show();
+            }
+        });
+    </script>
+</body>
+</html> 
