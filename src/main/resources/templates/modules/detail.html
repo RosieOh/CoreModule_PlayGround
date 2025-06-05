@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${module.name + ' - Core Modules'}">Module Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <link rel="stylesheet" href="/css/module-guide.css">
+    <style>
+        body {
+            background-color: #e8f0fe !important;
+            min-height: 100vh;
+        }
+        [data-theme="dark"] body {
+            background-color: #202124 !important;
+        }
+        .content-card, .sidebar-card {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+        [data-theme="dark"] .content-card,
+        [data-theme="dark"] .sidebar-card {
+            background-color: #2d3748 !important;
+        }
+        .module-card {
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            margin-bottom: 5px;
+        }
+        .feature-list li:before {
+            content: "•";
+            color: #007bff;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        [data-theme="dark"] .feature-list li:before {
+            color: #818cf8;
+        }
+        [data-theme="dark"] .card-title,
+        [data-theme="dark"] .card-text,
+        [data-theme="dark"] .feature-list li {
+            color: #e8eaed !important;
+        }
+        [data-theme="dark"] .text-muted {
+            color: #9aa0a6 !important;
+        }
+        [data-theme="dark"] .code-block {
+            background-color: #1f2937 !important;
+        }
+        [data-theme="dark"] .btn-outline-primary {
+            color: #818cf8;
+            border-color: #818cf8;
+        }
+        [data-theme="dark"] .btn-outline-primary:hover {
+            background-color: #818cf8;
+            color: #202124;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cube mr-2"></i>Core Modules
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/modules">Modules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/docs">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/examples">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">Community</a>
+                    </li>
+                </ul>
+                <div class="navbar-tools" style="display: flex;">
+                    <button class="btn btn-outline-primary" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="fontSizeToggle" aria-label="Toggle font size">
+                        <i class="fas fa-text-height"></i>
+                        <span>Font Size</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="highContrastToggle" aria-label="Toggle high contrast">
+                        <i class="fas fa-adjust"></i>
+                        <span>High Contrast</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-container">
+        <div class="guide-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-top">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/modules">모듈</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Core Module</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="header-main">
+                        <h1>Core Module</h1>
+                        <p class="lead">Spring Boot 애플리케이션의 핵심 기능을 제공하는 모듈입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content" class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="content-card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Features</h2>
+                        <ul class="feature-list">
+                            <li th:each="feature : ${module.features}" th:text="${feature}">Feature</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Usage Example</h2>
+                        <div class="code-block">
+                            <pre><code class="language-java" th:text="${module.usageExample}">Code example</code></pre>
+                        </div>
+                        <button class="btn btn-outline-primary mt-3" onclick="runExample()">
+                            <i class="fas fa-play mr-2"></i>Run Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Configuration</h2>
+                        <div class="code-block">
+                            <pre><code class="language-properties" th:text="${module.configuration}">Configuration</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Learning Progress</h2>
+                        <div class="progress mb-3">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+                        <div class="learning-steps">
+                            <div class="step completed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Read Overview</span>
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-circle"></i>
+                                <span>Study Features</span>
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-circle"></i>
+                                <span>Try Examples</span>
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-circle"></i>
+                                <span>Complete Quiz</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sidebar-card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Related Modules</h3>
+                        <ul class="related-modules">
+                            <li th:each="related : ${module.relatedModules}">
+                                <a th:href="@{/modules/{name}(name=${related})}" th:text="${related}">Related Module</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Notes</h3>
+                        <ul class="notes-list">
+                            <li th:each="note : ${module.notes}" th:text="${note}">Note</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h3 class="card-title">Quick Links</h3>
+                        <div class="quick-links">
+                            <a href="#features" class="btn btn-outline-primary btn-block mb-2">
+                                <i class="fas fa-list mr-2"></i>Features
+                            </a>
+                            <a href="#usage" class="btn btn-outline-primary btn-block mb-2">
+                                <i class="fas fa-code mr-2"></i>Usage
+                            </a>
+                            <a href="#config" class="btn btn-outline-primary btn-block">
+                                <i class="fas fa-cog mr-2"></i>Configuration
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer-container">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Core Modules</h5>
+                        <p class="text-muted">A comprehensive guide to implementing core functionality in your applications.</p>
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <p class="text-muted">© 2024 Core Modules. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-properties.min.js"></script>
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon and text
+            const icon = themeToggle.querySelector('i');
+            const text = themeToggle.querySelector('span');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            text.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+            // Update body class
+            document.body.classList.toggle('dark-theme', newTheme === 'dark');
+        }
+
+        // Initialize theme
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+                const icon = themeToggle.querySelector('i');
+                const text = themeToggle.querySelector('span');
+                icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                text.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            } else if (prefersDarkScheme.matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.body.classList.add('dark-theme');
+                const icon = themeToggle.querySelector('i');
+                const text = themeToggle.querySelector('span');
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Light Mode';
+            }
+        }
+
+        // Call initialize theme when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Font size toggle functionality
+        const fontSizeToggle = document.getElementById('fontSizeToggle');
+        let currentFontSize = 1;
+
+        fontSizeToggle.addEventListener('click', () => {
+            currentFontSize = currentFontSize === 1 ? 1.2 : 1;
+            document.body.style.fontSize = `${currentFontSize}rem`;
+            localStorage.setItem('fontSize', currentFontSize);
+        });
+
+        // Initialize font size
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            currentFontSize = parseFloat(savedFontSize);
+            document.body.style.fontSize = `${currentFontSize}rem`;
+        }
+
+        // High contrast toggle functionality
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        let isHighContrast = false;
+
+        highContrastToggle.addEventListener('click', () => {
+            isHighContrast = !isHighContrast;
+            document.documentElement.setAttribute('data-contrast', isHighContrast ? 'high' : 'normal');
+            localStorage.setItem('highContrast', isHighContrast);
+        });
+
+        // Initialize high contrast
+        const savedHighContrast = localStorage.getItem('highContrast');
+        if (savedHighContrast) {
+            isHighContrast = savedHighContrast === 'true';
+            document.documentElement.setAttribute('data-contrast', isHighContrast ? 'high' : 'normal');
+        }
+
+        // Learning progress functionality
+        let progress = 0;
+        const progressBar = document.querySelector('.progress-bar');
+        const steps = document.querySelectorAll('.step');
+
+        function updateProgress() {
+            progress += 25;
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+            progressBar.textContent = `${progress}%`;
+            
+            if (progress <= 100) {
+                steps[progress / 25 - 1].classList.add('completed');
+                steps[progress / 25 - 1].querySelector('i').className = 'fas fa-check-circle';
+            }
+        }
+
+        // Example run functionality
+        function runExample() {
+            const codeBlock = document.querySelector('.code-block code');
+            const code = codeBlock.textContent;
+            
+            // Here you would typically send the code to a backend service for execution
+            console.log('Running example:', code);
+            
+            // For now, just show a success message
+            alert('Example executed successfully!');
+        }
+    </script>
+</body>
+</html> 
