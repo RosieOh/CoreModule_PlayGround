@@ -28,7 +28,14 @@ public class SecurityConfig {
                 .requestMatchers(
                     new AntPathRequestMatcher("/"),
                     new AntPathRequestMatcher("/modules/**"),
-                    new AntPathRequestMatcher("/h2-console/**")
+                    new AntPathRequestMatcher("/h2-console/**"),
+                    new AntPathRequestMatcher("/css/**"),
+                    new AntPathRequestMatcher("/js/**"),
+                    new AntPathRequestMatcher("/images/**"),
+                    new AntPathRequestMatcher("/favicon.ico"),
+                    new AntPathRequestMatcher("/docs/**"),
+                    new AntPathRequestMatcher("/examples/**"),
+                    new AntPathRequestMatcher("/community/**")
                 ).permitAll()
                 .anyRequest().authenticated()
             )
