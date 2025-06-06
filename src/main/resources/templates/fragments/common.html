@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <title>Common Header</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/module-guide.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-nav {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        .navbar-brand {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.25rem;
+        }
+        .nav-link {
+            color: #495057;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+        .nav-link:hover {
+            color: #007bff;
+        }
+        .nav-link.active {
+            color: #007bff;
+        }
+        .navbar-tools {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .navbar-tools .btn {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #fff;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav th:fragment="header" class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cube mr-2"></i>Core Modules
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/modules">Modules</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/docs">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/examples">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/community">Community</a>
+                    </li>
+                </ul>
+                <div class="navbar-tools">
+                    <button class="btn btn-outline-primary" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="fontSizeToggle" aria-label="Toggle font size">
+                        <i class="fas fa-text-height"></i>
+                        <span>Font Size</span>
+                    </button>
+                    <button class="btn btn-outline-primary" id="highContrastToggle" aria-label="Toggle high contrast">
+                        <i class="fas fa-adjust"></i>
+                        <span>High Contrast</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <footer th:fragment="footer" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Core Modules</h5>
+                    <p class="text-muted">A comprehensive guide to implementing core functionality in your applications.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <p class="text-muted">© 2024 Core Modules. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
