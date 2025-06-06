@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="fragments/common :: header">
+    <meta charset="UTF-8">
+    <title>커뮤니티 게시판</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+    <style>
+        body {
+            background: #f5f6fa;
+        }
+        .board-container {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 2rem 1.5rem 3rem 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .board-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .board-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #222;
+            margin: 0;
+        }
+        .write-btn {
+            background-color: #1a73e8;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.2s;
+            font-size: 1rem;
+        }
+        .write-btn:hover {
+            background-color: #1557b0;
+            color: white;
+            text-decoration: none;
+        }
+        .write-btn i {
+            margin-right: 0.5rem;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        #grid {
+            min-height: 400px;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 900px) {
+            .board-container {
+                padding: 1rem 0.5rem 2rem 0.5rem;
+            }
+            .board-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="board-container">
+    <div class="board-header">
+        <h1 class="board-title">커뮤니티 게시판</h1>
+        <a href="/community/new" class="write-btn">
+            <i class="fas fa-pen"></i>새 글 작성
+        </a>
+    </div>
+    <div id="grid"></div>
+    <div id="empty-message" class="empty-message" th:if="${posts.size()} == 0">
+        등록된 게시글이 없습니다.
+    </div>
+</div>
+<div th:replace="fragments/common :: footer"></div>
+
+<!-- Toast UI Pagination JS (반드시 Grid보다 먼저) -->
+<script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.min.js"></script>
+<!-- Toast UI Grid JS -->
+<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.min.js"></script>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const posts = /*[[${posts}]]*/ [];
+        const gridData = posts.map((post, index) => ({
+            number: posts.length - index,
+            title: post.title,
+            id: post.id,
+            author: post.author,
+            createdAt: new Date(post.createdAt).toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            })
+        }));
+
+        const grid = new tui.Grid({
+            el: document.getElementById('grid'),
+            data: gridData,
+            columns: [
+                { header: '번호', name: 'number', align: 'center', width: 80 },
+                { 
+                    header: '제목', 
+                    name: 'title', 
+                    formatter: ({ value, rowKey }) => {
+                        const postId = grid.getValue(rowKey, 'id');
+                        return `<a href="/community/${postId}" class="post-title">${value}</a>`;
+                    }
+                },
+                { header: '작성자', name: 'author', width: 150 },
+                { header: '작성일', name: 'createdAt', width: 180 }
+            ],
+            columnOptions: {
+                resizable: true
+            },
+            scrollX: false,
+            scrollY: true,
+            rowHeight: 'auto',
+            bodyHeight: 400,
+            pageOptions: {
+                useClient: true,
+                perPage: 10
+            }
+        });
+
+        // Hide grid and show empty message if no posts
+        if (posts.length === 0) {
+            document.getElementById('grid').style.display = 'none';
+            document.getElementById('empty-message').style.display = 'block';
+        } else {
+            document.getElementById('empty-message').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

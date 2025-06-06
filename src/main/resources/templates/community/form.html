@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="fragments/common :: header">
+    <meta charset="UTF-8">
+    <title th:text="${post.id != null ? '게시글 수정' : '새 글 작성'}">게시글 폼</title>
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <style>
+        .form-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.875rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: #333;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26,115,232,0.1);
+        }
+        .form-control::placeholder {
+            color: #999;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-primary {
+            background-color: #1a73e8;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1557b0;
+        }
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #e5e5e5;
+        }
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        /* Toast UI Editor 커스텀 스타일 */
+        .toastui-editor-defaultUI {
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+        }
+        .toastui-editor-defaultUI-toolbar {
+            border-bottom: 1px solid #e5e5e5;
+            background-color: #f8f9fa;
+        }
+        .toastui-editor-defaultUI-toolbar button {
+            color: #333;
+        }
+        .toastui-editor-defaultUI-toolbar button:hover {
+            background-color: #e9ecef;
+        }
+        .toastui-editor-md-container {
+            background-color: #fff;
+        }
+        .toastui-editor-md-preview {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2 class="form-title" th:text="${post.id != null ? '게시글 수정' : '새 글 작성'}">게시글 폼</h2>
+    <form th:action="${post.id != null} ? @{'/community/edit/' + ${post.id}} : @{/community}" th:object="${post}" method="post">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control" required maxlength="100" placeholder="제목을 입력하세요">
+            <div class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div class="form-group">
+            <label for="author">작성자</label>
+            <input type="text" id="author" th:field="*{author}" class="form-control" required maxlength="50" placeholder="작성자 이름을 입력하세요">
+            <div class="error-message" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+        </div>
+        <div class="form-group">
+            <label for="content">내용</label>
+            <div id="editor"></div>
+            <input type="hidden" id="content" th:field="*{content}" required>
+            <div class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+        </div>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary" th:text="${post.id != null ? '수정' : '등록'}">등록</button>
+            <a href="/community" class="btn btn-secondary">취소</a>
+        </div>
+    </form>
+</div>
+<div th:replace="fragments/common :: footer"></div>
+
+<!-- Toast UI Editor JS -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script th:inline="javascript">
+    const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '500px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        initialValue: (/*[[${post.content}]]*/ '') || '',
+        toolbarItems: [
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'image', 'link'],
+            ['code', 'codeblock']
+        ]
+    });
+
+    // 폼 제출 시 에디터 내용을 hidden input에 설정
+    document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('#content').value = editor.getMarkdown();
+    });
+</script>
+</body>
+</html> 
