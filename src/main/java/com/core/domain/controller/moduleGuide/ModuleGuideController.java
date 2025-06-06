@@ -1,23 +1,23 @@
-package com.core.common.controller;
+package com.core.domain.controller.moduleGuide;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.core.domain.model.moduleCore.ModuleInfo;
+import com.core.domain.model.moduleCore.modules.SecurityModule;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.core.common.model.ModuleInfo;
-import com.core.common.model.modules.AuditModule;
-import com.core.common.model.modules.CacheModule;
-import com.core.common.model.modules.FileModule;
-import com.core.common.model.modules.LoggingModule;
-import com.core.common.model.modules.MessageModule;
-import com.core.common.model.modules.SchedulerModule;
-import com.core.common.model.modules.SecurityModule;
-import com.core.common.model.modules.ValidationModule;
+import com.core.domain.model.moduleCore.modules.AuditModule;
+import com.core.domain.model.moduleCore.modules.CacheModule;
+import com.core.domain.model.moduleCore.modules.FileModule;
+import com.core.domain.model.moduleCore.modules.LoggingModule;
+import com.core.domain.model.moduleCore.modules.MessageModule;
+import com.core.domain.model.moduleCore.modules.SchedulerModule;
+import com.core.domain.model.moduleCore.modules.ValidationModule;
 
 /**
  * 주요 기능:

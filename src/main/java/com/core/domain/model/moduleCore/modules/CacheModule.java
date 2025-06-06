@@ -1,8 +1,8 @@
-package com.core.common.model.modules;
+package com.core.domain.model.moduleCore.modules;
 
 import java.util.Arrays;
 
-import com.core.common.model.ModuleInfo;
+import com.core.domain.model.moduleCore.ModuleInfo;
 
 public class CacheModule {
     public static ModuleInfo getInfo() {
