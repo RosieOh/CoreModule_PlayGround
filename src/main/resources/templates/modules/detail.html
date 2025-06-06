@@ -10,42 +10,77 @@
     <link rel="stylesheet" href="/css/module-guide.css">
     <style>
         body {
-            background-color: #e8f0fe !important;
             min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+            backdrop-filter: blur(8px);
+            color: #fff;
         }
         [data-theme="dark"] body {
-            background-color: #202124 !important;
+            background: linear-gradient(135deg, #141e30 0%, #243b55 100%) !important;
+            color: #e8eaed;
         }
         .content-card, .sidebar-card {
-            background-color: rgba(255, 255, 255, 0.9) !important;
+            background: rgba(255,255,255,0.15) !important;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37), 0 1.5px 4px 0 rgba(0,0,0,0.10) inset;
+            border: 1px solid rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
+            color: #fff;
         }
         [data-theme="dark"] .content-card,
         [data-theme="dark"] .sidebar-card {
-            background-color: #2d3748 !important;
+            background: rgba(36,59,85,0.7) !important;
+            color: #e8eaed;
         }
         .module-card {
-            transition: transform 0.2s;
-            margin-bottom: 20px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37), 0 1.5px 4px 0 rgba(0,0,0,0.10) inset;
+            border: 1px solid rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            min-width: 300px;
+            max-width: 400px;
         }
         .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 40px 0 rgba(31,38,135,0.45);
+        }
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #90caf9;
+            filter: drop-shadow(0 2px 8px #1976d2aa);
+        }
+        [data-theme="dark"] .module-card {
+            background: rgba(36,59,85,0.7);
+            color: #e8eaed;
+        }
+        [data-theme="dark"] .module-icon {
+            color: #b3cfff;
+            filter: drop-shadow(0 2px 8px #90caf9aa);
         }
         .feature-list {
             list-style-type: none;
             padding-left: 0;
         }
         .feature-list li {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            color: #fff;
         }
         .feature-list li:before {
             content: "•";
-            color: #007bff;
+            color: #90caf9;
             font-weight: bold;
-            margin-right: 5px;
+            margin-right: 8px;
         }
         [data-theme="dark"] .feature-list li:before {
-            color: #818cf8;
+            color: #b3cfff;
         }
         [data-theme="dark"] .card-title,
         [data-theme="dark"] .card-text,
@@ -65,6 +100,70 @@
         [data-theme="dark"] .btn-outline-primary:hover {
             background-color: #818cf8;
             color: #202124;
+        }
+        .guide-header, .header-container {
+            background: transparent !important;
+            box-shadow: none !important;
+            color: #fff;
+            text-align: center;
+            padding: 2.5rem 0 1.5rem 0;
+        }
+        .guide-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(31,38,135,0.18);
+        }
+        .guide-header .lead {
+            font-size: 1.2rem;
+            color: #e3eafc;
+            opacity: 0.95;
+            margin-bottom: 0;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1976d2 0%, #64b5f6 100%);
+            border: none;
+            border-radius: 18px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #42a5f5 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
+        }
+        .btn-outline-primary {
+            color: #90caf9;
+            border: 1.5px solid #90caf9;
+            border-radius: 18px;
+            background: transparent;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+        }
+        .btn-outline-primary:hover {
+            background: #90caf9;
+            color: #1e3c72;
+            border-color: #90caf9;
+        }
+        footer, .footer-container {
+            background: transparent !important;
+            color: #e3eafc;
+            text-align: center;
+            box-shadow: none !important;
+            margin-top: 3rem;
+            padding: 2rem 0 1rem 0;
+        }
+        footer h5 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        footer .text-muted {
+            color: #b3cfff !important;
         }
     </style>
 </head>
@@ -256,7 +355,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-properties.min.js"></script>
     <script>
-        // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
         
@@ -266,17 +364,15 @@
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             
-            // Update icon and text
             const icon = themeToggle.querySelector('i');
             const text = themeToggle.querySelector('span');
             icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
             text.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
 
-            // Update body class
             document.body.classList.toggle('dark-theme', newTheme === 'dark');
         }
 
-        // Initialize theme
+        // 테마 초기화
         function initializeTheme() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
@@ -296,12 +392,10 @@
             }
         }
 
-        // Call initialize theme when DOM is loaded
         document.addEventListener('DOMContentLoaded', initializeTheme);
 
         themeToggle.addEventListener('click', toggleTheme);
 
-        // Font size toggle functionality
         const fontSizeToggle = document.getElementById('fontSizeToggle');
         let currentFontSize = 1;
 
@@ -311,14 +405,12 @@
             localStorage.setItem('fontSize', currentFontSize);
         });
 
-        // Initialize font size
         const savedFontSize = localStorage.getItem('fontSize');
         if (savedFontSize) {
             currentFontSize = parseFloat(savedFontSize);
             document.body.style.fontSize = `${currentFontSize}rem`;
         }
 
-        // High contrast toggle functionality
         const highContrastToggle = document.getElementById('highContrastToggle');
         let isHighContrast = false;
 
@@ -328,14 +420,12 @@
             localStorage.setItem('highContrast', isHighContrast);
         });
 
-        // Initialize high contrast
         const savedHighContrast = localStorage.getItem('highContrast');
         if (savedHighContrast) {
             isHighContrast = savedHighContrast === 'true';
             document.documentElement.setAttribute('data-contrast', isHighContrast ? 'high' : 'normal');
         }
 
-        // Learning progress functionality
         let progress = 0;
         const progressBar = document.querySelector('.progress-bar');
         const steps = document.querySelectorAll('.step');
@@ -351,8 +441,7 @@
                 steps[progress / 25 - 1].querySelector('i').className = 'fas fa-check-circle';
             }
         }
-
-        // Example run functionality
+        
         function runExample() {
             const codeBlock = document.querySelector('.code-block code');
             const code = codeBlock.textContent;
